@@ -1,0 +1,58 @@
+:root {
+    --yugioh-light: white;
+    --yugioh-dark: black;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    color: lightgray;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+
+
+.container {
+
+    width: 100%;
+
+
+    @media (min-width:480px) {
+        width: 80%;
+        max-width: 420px;
+        margin: auto
+    }
+
+    @media (min-width:768px) {
+        max-width: 720px;
+
+    }
+
+    @media (min-width:1200px) {
+        max-width: 1176px;
+
+    }
+
+    @media (min-width:1440px) {
+
+        max-width: 1400px;
+
+    }
+
+
+
+    .row {
+
+
+        .col-12 {}
+    }
+}
