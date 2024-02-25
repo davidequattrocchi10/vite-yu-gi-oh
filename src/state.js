@@ -7,6 +7,7 @@ export const state = reactive({
     cards: [],
     archetypes: [],
     selectedArchetype: '',
+    loading: true,
 
 
     //Reactive object 
@@ -16,6 +17,7 @@ export const state = reactive({
             .then(response => {
                 console.log(response.data.data);
                 this.cards = response.data.data;
+                this.loading = false;
             })
             .catch(error => {
                 console.error(error);

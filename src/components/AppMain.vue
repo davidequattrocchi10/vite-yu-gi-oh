@@ -1,8 +1,8 @@
 <script>
-import axios from 'axios'
-import { state } from '../state.js'
-import ArchetypesFilter from './ArchetypesFilter.vue'
-import CardsList from './CardsList.vue'
+import { state } from '../state.js';
+import ArchetypesFilter from './ArchetypesFilter.vue';
+import CardsList from './CardsList.vue';
+import TotalCardResults from './TotalCardResults.vue';
 
 export default {
     name: 'AppMain',
@@ -30,10 +30,13 @@ export default {
         // Get all Cards
         state.fetchData(state.api_url)
 
+
+
     },
     components: {
         ArchetypesFilter,
-        CardsList
+        CardsList,
+        TotalCardResults
     }
 
 }
@@ -46,9 +49,7 @@ export default {
         <ArchetypesFilter @filter="filterResults"></ArchetypesFilter>
 
         <!-- total results -->
-        <div>
-            {{ state.cards.length }}
-        </div>
+        <TotalCardResults></TotalCardResults>
 
 
         <!-- cards list -->
@@ -59,4 +60,8 @@ export default {
 </template>
 
 
-<style scoped></style>
+<style scoped>
+main {
+    background-color: orange;
+}
+</style>

@@ -9,16 +9,14 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: black;
-    color: lightgray;
-}
-
 img {
     max-width: 100%;
 }
 
-
+body {
+    min-height: 100vh;
+    background-color: orange;
+}
 
 
 .container {
