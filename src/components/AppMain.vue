@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { state } from '../state.js'
 import ArchetypesFilter from './ArchetypesFilter.vue'
+import CardsList from './CardsList.vue'
 
 export default {
     name: 'AppMain',
@@ -26,16 +27,13 @@ export default {
     },
     mounted() {
 
-        // Get all archetypes
-        //this.getArchetypesList('https://db.ygoprodeck.com/api/v7/archetypes.php')
-
-
         // Get all Cards
         state.fetchData(state.api_url)
 
     },
     components: {
-        ArchetypesFilter
+        ArchetypesFilter,
+        CardsList
     }
 
 }
@@ -48,23 +46,13 @@ export default {
         <ArchetypesFilter @filter="filterResults"></ArchetypesFilter>
 
         <!-- total results -->
+        <div>
+            {{ state.cards.length }}
+        </div>
 
 
         <!-- cards list -->
-        <section class="cards">
-            <div class="container">
-                <div class="row">
-                    <div class="col" v-for="card in state.cards">
-                        <div class="card">
-                            <img :src="card.card_images[0].image_url">
-                            <h3>{{ card.name }}</h3>
-                            <div> {{ card.archetype }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
+        <CardsList :cards="state.cards"></CardsList>
 
 
     </main>
