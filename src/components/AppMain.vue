@@ -1,60 +1,41 @@
 <script>
 import axios from 'axios'
 import { state } from '../state.js'
+import ArchetypesFilter from './ArchetypesFilter.vue'
 
 export default {
     name: 'AppMain',
     data() {
         return {
-            cards: {},
-            state,
-            archetypes: [],
-            selectedArchetype: ''
+            state
         }
     },
     methods: {
         filterResults() {
-            console.log('filter all cards')
-            const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0&archetype=' + this.selectedArchetype
-            console.log(url)
+            let url;
+            if (state.selectedArchetype === '') {
+                url = state.api_url;
+            } else {
+                url = state.api_url + '&archetype=' + state.selectedArchetype;
+            }
+            state.fetchData(url);
 
-            axios.get(url)
-                .then(response => {
-                    console.log(response.data.data);
-                    this.cards = response.data.data;
-                })
-                .catch(error => {
-                    console.error(error);
-                })
+
 
         }
-
     },
     mounted() {
+
         // Get all archetypes
-        axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php')
-            .then(responde => {
-                console.log(responde.data);
-                this.archetypes = responde.data;
-
-            })
-            .catch(error => {
-                console.error(error);
-            })
-
+        //this.getArchetypesList('https://db.ygoprodeck.com/api/v7/archetypes.php')
 
 
         // Get all Cards
-        axios.get(state.api_url)
-            .then(response => {
-                console.log(response.data.data);
-                this.cards = response.data.data;
-            })
-            .catch(error => {
-                console.error(error);
-            })
+        state.fetchData(state.api_url)
 
-
+    },
+    components: {
+        ArchetypesFilter
     }
 
 }
@@ -64,14 +45,7 @@ export default {
     <main>
 
         <!-- filter -->
-        <select name="archetype" id="archetype" v-model="selectedArchetype" @change="filterResults">
-            <option value="">All</option>
-            <!-- all archetype here -->
-            <option :value="archetype.archetype_name" v-for="archetype in archetypes">
-                {{ archetype.archetype_name }}
-
-            </option>
-        </select>
+        <ArchetypesFilter @filter="filterResults"></ArchetypesFilter>
 
         <!-- total results -->
 
@@ -80,7 +54,7 @@ export default {
         <section class="cards">
             <div class="container">
                 <div class="row">
-                    <div class="col" v-for="card in cards">
+                    <div class="col" v-for="card in state.cards">
                         <div class="card">
                             <img :src="card.card_images[0].image_url">
                             <h3>{{ card.name }}</h3>
